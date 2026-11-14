@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond The Code - Dede Risma</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Georgia','Segoe UI',serif}
+  html{scroll-behavior:smooth}
+  body{background:#F5F0E8;color:#3E3A32}
+  #progress{position:fixed;top:0;left:0;height:4px;background:#6B7F5E;width:0%;z-index:100}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;max-width:1100px;margin:auto;border-bottom:1px solid #DDD3C0;position:sticky;top:0;background:rgba(245,240,232,0.95);backdrop-filter:blur(10px);z-index:10}
+  .logo{letter-spacing:4px;font-size:14px;text-transform:uppercase}
+  .logo span{color:#6B7F5E}
+  .nav-links a{color:#7A7263;text-decoration:none;margin-left:28px;font-size:13px;letter-spacing:1px}
+  .nav-links a:hover{color:#6B7F5E}
+  .hero{max-width:1100px;margin:0 auto;padding:70px 40px 40px;text-align:center}
+  .hero .tag{display:inline-block;background:#E8E0C8;color:#6B7F5E;padding:7px 18px;border-radius:20px;font-size:12px;letter-spacing:2px;font-family:'Segoe UI',sans-serif;margin-bottom:20px;font-weight:bold}
+  .hero h1{font-size:62px;font-weight:400;letter-spacing:2px;line-height:1.05;margin-bottom:18px}
+  .hero h1 span{color:#6B7F5E;font-style:italic}
+  .hero p{max-width:650px;margin:0 auto 25px;line-height:1.8;color:#6B6558;font-family:'Segoe UI',sans-serif;font-size:16px}
+  .meta{display:flex;justify-content:center;gap:25px;font-family:'Segoe UI',sans-serif;font-size:13px;color:#8A8172;flex-wrap:wrap}
+  .meta b{color:#3E3A32}
+  .cover{max-width:1000px;margin:20px auto;padding:0 20px}
+  .cover img{width:100%;height:380px;object-fit:cover;border-radius:20px;display:block}
+  .cover-caption{text-align:center;font-family:'Segoe UI',sans-serif;font-size:12px;color:#A99B83;margin-top:10px}
+  .layout{max-width:1000px;margin:40px auto;padding:0 20px;display:flex;gap:40px;align-items:flex-start}
+  .toc{position:sticky;top:90px;min-width:210px;background:#FFFEFA;border:1px solid #E8DFCE;border-radius:16px;padding:22px}
+  .toc h4{font-size:12px;letter-spacing:2px;color:#6B7F5E;margin-bottom:15px;font-family:'Segoe UI',sans-serif}
+  .toc a{display:block;text-decoration:none;color:#6B6558;font-family:'Segoe UI',sans-serif;font-size:13.5px;padding:8px 0;border-bottom:1px solid #F0E9D8}
+  .toc a:hover{color:#6B7F5E}
+  .toc .like-box{margin-top:18px;text-align:center}
+  .toc .like-box button{background:#6B7F5E;color:white;border:none;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold;font-family:'Segoe UI',sans-serif;width:100%}
+  .toc .dark-box button{background:transparent;border:1px solid #DDD3C0;padding:9px 20px;border-radius:20px;cursor:pointer;width:100%;margin-top:8px;font-family:'Segoe UI',sans-serif}
+  .article{flex:1;line-height:2;color:#4A453C;font-size:16px;font-family:'Segoe UI',sans-serif}
+  .article h2{font-family:'Georgia',serif;font-weight:400;font-size:28px;color:#3E3A32;margin:45px 0 12px;display:flex;gap:12px;align-items:center}
+  .article h2 .num{background:#6B7F5E;color:white;width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-family:'Segoe UI',sans-serif;flex-shrink:0}
+  .article p{margin-bottom:18px}
+  .quote{background:#EDE6D6;border-left:4px solid #6B7F5E;padding:22px 25px;border-radius:0 12px 12px 0;margin:25px 0;font-style:italic;font-family:'Georgia',serif;font-size:18px;line-height:1.7;color:#3E3A32}
+  .point-card{background:#FFFEFA;border:1px solid #E8DFCE;border-radius:16px;padding:24px;margin:20px 0;display:flex;gap:18px;align-items:flex-start}
+  .point-card .icon{font-size:32px;background:#F5F0E8;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .point-card h3{font-family:'Georgia',serif;font-weight:400;font-size:19px;color:#3E3A32;margin-bottom:6px}
+  .point-card p{font-size:14.5px;line-height:1.7;margin:0}
+  .code-box{background:#26231E;color:#E8E0C8;border-radius:14px;padding:22px;margin:22px 0;font-family:monospace;font-size:13px;line-height:1.8;overflow-x:auto}
+  .code-box .sage{color:#A8D5A2}
+  .code-box .taupe{color:#C9BFA8}
+  .tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+  .tags span{background:#E8E0C8;padding:7px 16px;border-radius:20px;font-size:12px;font-family:'Segoe UI',sans-serif;color:#6B6558}
+  footer{text-align:center;padding:50px 20px;color:#8A8172;font-size:13px;border-top:1px solid #DDD3C0;margin-top:60px;line-height:1.9;font-family:'Segoe UI',sans-serif}
+  footer .foot-title{letter-spacing:5px;font-size:22px;color:#6B7F5E;font-weight:400;font-family:'Georgia',serif}
+  footer .foot-name{margin:15px 0 8px;font-size:15px;color:#3E3A32}
+  /* DARK MODE - WARNA BARU LEBIH TERANG & SENADA */
+  body.dark{background:#2B2A26;color:#EDE8DE}
+  body.dark #progress{background:#A8D5A2}
+  body.dark nav{background:rgba(43,42,38,0.95);border-color:#3E3D38}
+  body.dark .logo span, body.dark .hero h1 span, body.dark .toc h4, body.dark footer .foot-title{color:#A8D5A2}
+  body.dark .nav-links a:hover{color:#A8D5A2}
+  body.dark .hero .tag{background:#3A4032;color:#A8D5A2}
+  body.dark .toc,body.dark .point-card{background:#38362F;border-color:#4A473F}
+  body.dark .toc a{color:#CFC9BC;border-color:#4A473F}
+  body.dark .toc a:hover{color:#A8D5A2}
+  body.dark .toc .like-box button{background:#A8D5A2;color:#2B2A26}
+  body.dark .toc .dark-box button{color:#EDE8DE;border-color:#4A473F}
+  body.dark .article p{color:#D6D0C2}
+  body.dark .article h2{color:#F5F0E8}
+  body.dark .article h2 .num{background:#A8D5A2;color:#2B2A26}
+  body.dark .quote{background:#38362F;color:#F5F0E8;border-left-color:#A8D5A2}
+  body.dark .point-card h3{color:#F5F0E8}
+  body.dark .point-card .icon{background:#2B2A26}
+  body.dark .tags span{background:#3A4032;color:#D6D0C2}
+  body.dark footer{border-color:#3E3D38}
+  body.dark .meta b, body.dark .foot-name{color:#F5F0E8}
+  @media(max-width:800px){.hero h1{font-size:38px}.layout{flex-direction:column}.toc{position:static;width:100%}.cover img{height:220px}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav>
+  <div class="logo">Beyond The <span>Code</span></div>
+  <div class="nav-links"><a href="#article">ARTICLE</a><a href="#points">POINTS</a><a href="#about">ABOUT</a></div>
+</nav>
+
+<header class="hero" id="article">
+  <div class="tag">✦ INFORMATICS JOURNAL • VOL. 01 ✦</div>
+  <h1>INFORMATICS:<br>THE INVISIBLE MAGIC<br><span>BEHIND YOUR SCREEN</span></h1>
+  <p>From the moment you wake up to the moment you sleep, informatics is quietly working for you. This is the story of the magic you never see.</p>
+  <div class="meta"><span>By <b>Dede Risma</b></span><span>📅 15 Nov 2026</span><span>⏱ 8 min read</span><span>👁 <span id="views">1,248</span> views</span></div>
+</header>
+
+<div class="cover">
+  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80" alt="Informatics">
+  <div class="cover-caption">Informatics is everywhere — even when you don't see it. Photo: Unsplash</div>
+</div>
+
+<div class="layout">
+  <aside class="toc">
+    <h4>IN THIS ARTICLE</h4>
+    <a href="#p1">1. What is Informatics?</a>
+    <a href="#p2">2. Informatics in Daily Life</a>
+    <a href="#p3">3. Data is The New Gold</a>
+    <a href="#p4">4. Artificial Intelligence</a>
+    <a href="#p5">5. Cybersecurity</a>
+    <a href="#p6">6. Cloud & Big Data</a>
+    <a href="#p7">7. The Dark Side</a>
+    <a href="#p8">8. Future of Informatics</a>
+    <a href="#conclusion">★ Conclusion</a>
+    <div class="like-box">
+      <button id="likeBtn">♡ Like (<span id="likeCount">0</span>)</button>
+    </div>
+    <div class="dark-box"><button id="darkBtn">🌙 Dark Mode</button></div>
+  </aside>
+
+  <article class="article" id="points">
+    <p><b>Have you ever imagined a day without your phone?</b> No Google Maps, no TikTok, no GoFood, no ChatGPT. Feels impossible, right? That's because informatics has become the air we breathe — invisible, but we can't live without it.</p>
+
+    <div class="quote">"Informatics is not just about computers. It's about how humans, data, and machines work together to solve real problems."</div>
+
+    <h2 id="p1"><span class="num">1</span> What is Informatics?</h2>
+    <p>Informatics is the science of information — how we collect it, store it, process it, and use it to make decisions. If Computer Science is about building the machine, Informatics is about <b>what the machine does for humans.</b></p>
+    <div class="point-card"><div class="icon">💻</div><div><h3>Simple Definition</h3><p>Informatics = People + Data + Technology. Three things that must work together.</p></div></div>
+
+    <h2 id="p2"><span class="num">2</span> Informatics in Daily Life</h2>
+    <p>You meet informatics from morning to night. Your alarm, your ojek online, your Spotify playlist, your TikTok FYP — all of them are informatics.</p>
+    <div class="point-card"><div class="icon">📱</div><div><h3>Example in Your Day</h3><p>07:00 Alarm • 08:00 Gojek • 12:00 GoFood • 19:00 Netflix • 22:00 TikTok. All informatics!</p></div></div>
+
+    <h2 id="p3"><span class="num">3</span> Data is The New Gold</h2>
+    <p>Every click you make creates data. Companies use that data to know what you like, what you need, and what you will buy next. Whoever controls data, controls the future.</p>
+    <div class="code-box"><span class="sage"># Data is power</span><br>user_data = <span class="taupe">collect</span>(clicks, likes, searches)<br>insight = model.<span class="taupe">analyze</span>(user_data)<br><span class="sage">→</span> recommendation = <span class="taupe">personalized for YOU</span></div>
+
+    <h2 id="p4"><span class="num">4</span> Artificial Intelligence</h2>
+    <p>AI is the brain of informatics. It learns from data, just like you learn from experience. ChatGPT, face unlock, Google Translate — all AI.</p>
+    <div class="point-card"><div class="icon">🤖</div><div><h3>AI is Not Magic, It's Math</h3><p>Behind every smart AI, there are thousands of math formulas and millions of data. AI doesn't think like humans, it calculates patterns.</p></div></div>
+
+    <h2 id="p5"><span class="num">5</span> Cybersecurity</h2>
+    <p>The more we live online, the more we need protection. Cybersecurity is the bodyguard of informatics — protecting your password, your photos, your money.</p>
+    <div class="point-card"><div class="icon">🔒</div><div><h3>Stay Safe</h3><p>Use strong passwords, turn on 2FA, don't click random links. Your data is your responsibility too.</p></div></div>
+
+    <h2 id="p6"><span class="num">6</span> Cloud & Big Data</h2>
+    <p>Where do your 10,000 photos go? To the Cloud. Cloud computing lets us store unlimited data without needing a huge hard disk. Big Data lets us analyze millions of data in seconds.</p>
+
+    <h2 id="p7"><span class="num">7</span> The Dark Side</h2>
+    <p>But informatics can be dangerous too. Fake news spreads in seconds, our data can be stolen, and we become addicted to screens. We must be <b>smart AND wise</b> users.</p>
+    <div class="point-card"><div class="icon">⚠️</div><div><h3>3 Dangers to Watch</h3><p>1. Hoax & Fake News • 2. Data Theft & Scam • 3. Screen Addiction. Always check the source before you share.</p></div></div>
+
+    <h2 id="p8"><span class="num">8</span> Future of Informatics</h2>
+    <p>What next? Quantum computers, smart cities, self-driving cars, doctors using AI to detect cancer earlier. Informatics in 2030 will be even more invisible — and even more powerful.</p>
+
+    <h2 id="conclusion"><span class="num">★</span> Conclusion</h2>
+    <p>Informatics has changed the way we live, learn, and work. The question is no longer <i>"Do we need informatics?"</i> The real question is, <b>"How will we use it to make our life better?"</b> The answer is in your hands.</p>
+
+    <div class="tags"><span>#Informatics</span><span>#AI</span><span>#Data</span><span>#Cybersecurity</span><span>#Technology</span><span>#Future</span></div>
+  </article>
+</div>
+
+<footer id="about">
+  <div class="foot-title">BEYOND THE CODE</div>
+  <div class="foot-name">Created by <b>Dede Risma</b> | NIM: 25552011352</div>
+  <div>Informatics • © 2026</div>
+</footer>
+
+<script>
+  const darkBtn = document.getElementById("darkBtn");
+  darkBtn.addEventListener("click", function() {
+    document.body.classList.toggle("dark");
+    darkBtn.textContent = document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
+  });
+  let likes = 0;
+  const likeBtn = document.getElementById("likeBtn");
+  const likeCount = document.getElementById("likeCount");
+  likeBtn.addEventListener("click", function() {
+    likes++; likeCount.textContent = likes;
+    likeBtn.style.transform = "scale(1.05)";
+    setTimeout(() => { likeBtn.style.transform = "scale(1)"; }, 150);
+  });
+  window.addEventListener("scroll", function(){
+    let h = document.documentElement;
+    let pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.getElementById("progress").style.width = pct + "%";
+  });
+</script>
+</body>
+</html>
